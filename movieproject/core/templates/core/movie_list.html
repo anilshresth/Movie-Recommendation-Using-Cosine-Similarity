@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container-fluid">
+    
+    <!-- Movie list -->
+    <div class="row">
+        {% for row in data %}
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{row.image_urls}}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{row.title}}</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="{% url 'movie_detail' row.id  %}" class="btn btn-primary">Details</a>
+             
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+    
+</div>
+{% endblock content %}
+ 

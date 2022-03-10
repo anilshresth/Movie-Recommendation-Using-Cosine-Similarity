@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+<script>
+    var titleText=document.getElementById("movie_title")
+    var title=titleText.trim()
+
+
+
+</script>
+
+{% block content %}
+{% for row in csv_detail %}
+<p id="movie_title" >{{row.title}}</p>
+{{row.budget}}
+
+{% endfor %}
+{% if image_urls %}
+<img src="https://image.tmdb.org/t/p/w500{{ image_urls }}" alt="">
+{% endif %}
+{% endblock %}
+
+{% block recommendation %}
+
+    <h5 style="text-align: center;">Recommendation for similar movies are</h5>
+    <div class="container-fluid">
+    
+        <!-- Movie list -->
+        <div class="row">
+            {% for movie,image_url,movie_overview in movie_zipped %}
+            <div class="card" style="width: 18rem;">
+                
+                <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{image_url}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{movie}}</h5>
+                  
+                  <p class="card-text">{{movie_overview}}</p>
+              
+                 
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+        
+    </div>
+
+
+
+{% endblock recommendation %}
