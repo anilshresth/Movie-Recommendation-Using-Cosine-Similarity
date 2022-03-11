@@ -1,22 +1,31 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" href="{% static 'core/css/movie_list.css' %}">
+{% endblock css %}
+
 
 {% block content %}
-<div class="container-fluid">
+<div class="container mt-5">
+  <h4>Movies</h4>
     
     <!-- Movie list -->
     <div class="row">
         {% for row in data %}
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{row.image_urls}}" alt="Card image cap">
+        <div class="col-md-3  ">
+        <div class=" card border border-primary" style="width: 18rem;">
+            <img class="card-img-top rounded " src="https://image.tmdb.org/t/p/w500{{row.image_urls}}" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">{{row.title}}</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="{% url 'movie_detail' row.id  %}" class="btn btn-primary">Details</a>
+             
+              <a href="{% url 'movie_detail' row.id  %}" >  <span class=" border  watch_text ">
+                Add to watch
+              </span>  </a>
              
             </div>
           </div>
+        </div>
           {% endfor %}
         </div>
     

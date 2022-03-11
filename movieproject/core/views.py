@@ -29,11 +29,11 @@ def homepage(request):
         data = response.json()
         return data['poster_path']
 
-    df["image_urls"] = df['id'][:51].map(
+    df["image_urls"] = df['id'][:6].map(
         get_image_url_path)
 
     for index, row in df.iterrows():
-        if index <= 50:
+        if index <= 5:
             csv_rows.append(row)
 
         else:

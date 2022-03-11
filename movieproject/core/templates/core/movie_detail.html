@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 <script>
     var titleText=document.getElementById("movie_title")
     var title=titleText.trim()
@@ -6,6 +7,10 @@
 
 
 </script>
+{% block css %}
+<link rel="stylesheet" href="{% static 'core/css/movie_detail.css' %}">
+{% endblock css %}
+
 
 {% block content %}
 {% for row in csv_detail %}
@@ -14,7 +19,7 @@
 
 {% endfor %}
 {% if image_urls %}
-<img src="https://image.tmdb.org/t/p/w500{{ image_urls }}" alt="">
+<img src="https://image.tmdb.org/t/p/w500{{ image_urls }}" height="300" width="300" alt="">
 {% endif %}
 {% endblock %}
 
