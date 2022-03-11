@@ -29,11 +29,11 @@ def homepage(request):
         data = response.json()
         return data['poster_path']
 
-    df["image_urls"] = df['id'][:6].map(
+    df["image_urls"] = df['id'][:20].map(
         get_image_url_path)
 
     for index, row in df.iterrows():
-        if index <= 5:
+        if index <= 20:
             csv_rows.append(row)
 
         else:
@@ -52,6 +52,8 @@ def movie_detail(request, id):
     df = pd.read_csv(os.path.join(
         work_path, 'movie_dataset.csv'),  low_memory=False)
     movie_detail = df[df['id'] == id]
+
+    genres = list(movie_detail['genres'])
 
     def get_image_url(id):
         base_url = f"https://api.themoviedb.org/3/movie/{id}?api_key=3a52b2ae849a177b7117edd478a2e3e9&language=en-US"
@@ -73,7 +75,9 @@ def movie_detail(request, id):
         context = {
             'csv_detail': csv_detail,
             'image_urls': image_urls,
+            'genres': genres,
             'movie_zipped': movie_zipped
+
 
         }
         return render(request, 'core/movie_detail.html', context=context)

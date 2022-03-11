@@ -1,47 +1,83 @@
 {% extends 'core/base.html' %}
 {% load static %}
-<script>
-    var titleText=document.getElementById("movie_title")
-    var title=titleText.trim()
 
-
-
-</script>
 {% block css %}
 <link rel="stylesheet" href="{% static 'core/css/movie_detail.css' %}">
 {% endblock css %}
 
 
 {% block content %}
-{% for row in csv_detail %}
-<p id="movie_title" >{{row.title}}</p>
-{{row.budget}}
+<div class="container"> 
+  <div class="row">
+    {% for row in csv_detail %}
+    <div class="col-sm-3">
+        <div>{{row.title}}</div>
+        {% if image_urls %}
+        <img src="https://image.tmdb.org/t/p/w500{{ image_urls }}" height="300" width="300" alt="">
+        {% endif %}
 
-{% endfor %}
-{% if image_urls %}
-<img src="https://image.tmdb.org/t/p/w500{{ image_urls }}" height="300" width="300" alt="">
-{% endif %}
+    </div>
+    
+    <div class="col-sm-9 pt-3">
+      <div class="card">
+        <div class="card-body">
+          <blockquote class="blockquote blockquote-custom bg-white px-3 pt-4">
+            <div class="blockquote-custom-icon bg-info shadow-1-stron pt-2">
+              <i class="fa fa-quote-left text-white pt-2"></i>
+            </div>
+            <p class="mb-0 mt-2 font-italic">"
+              {{row.overview}}
+             ."
+            </p>
+            {% for genre in genres %}
+            <span>Genre: {{genre}}</span>
+            {% endfor %}
+            <p>Type:{{row.keywords}}</p>
+            <p>Director:{{row.director}}</p>
+            <p>Ratings:{{row.vote_average}}</p>
+            
+            <footer class="blockquote-footer pt-4 mt-4 border-top">
+              Someone famous in
+              <cite title="Source Title">Source Title</cite>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+      
+       
+             
+
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
 {% endblock %}
+
+
 
 {% block recommendation %}
 
-    <h5 style="text-align: center;">Recommendation for similar movies are</h5>
+    <h2 style="text-align: center;">Recommendation for similar movies are</h2>
     <div class="container-fluid">
     
         <!-- Movie list -->
         <div class="row">
+          
             {% for movie,image_url,movie_overview in movie_zipped %}
+            <div class="col-md-3">
             <div class="card" style="width: 18rem;">
                 
                 <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{image_url}}" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">{{movie}}</h5>
+                    <h3 class="card-title">{{movie}}</h3>
                   
                   <p class="card-text">{{movie_overview}}</p>
               
                  
                 </div>
               </div>
+            </div>
               {% endfor %}
             </div>
         
@@ -50,3 +86,15 @@
 
 
 {% endblock recommendation %}
+
+
+
+
+
+
+
+
+
+
+
+
