@@ -7,6 +7,8 @@ urlpatterns = [
 
     path('', include('django.contrib.auth.urls')),
     path('register/', views.register, name='register'),
+    path("movie-form/", views.addmovieform, name='movie-form'),
+
 
 
 

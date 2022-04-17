@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfile
+from .models import UserProfile, Movie
 
 
 class LoginForm(forms.Form):
@@ -34,3 +34,7 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('date_of_birth', 'photo')
+
+
+class MovieForm(forms.Form):
+    movie_id = forms.IntegerField()

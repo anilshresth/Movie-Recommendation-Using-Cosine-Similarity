@@ -7,17 +7,17 @@
 
 
 {% block content %}
-<div class="container"> 
+<div class="container">
   <div class="row">
     {% for row in csv_detail %}
     <div class="col-sm-3">
-        <div>{{row.title}}</div>
-        {% if image_urls %}
-        <img src="https://image.tmdb.org/t/p/w500{{ image_urls }}" height="300" width="300" alt="">
-        {% endif %}
+      <div>{{row.title}}</div>
+      {% if image_urls %}
+      <img src="https://image.tmdb.org/t/p/w500{{ image_urls }}" height="300" width="300" alt="">
+      {% endif %}
 
     </div>
-    
+
     <div class="col-sm-9 pt-3">
       <div class="card">
         <div class="card-body">
@@ -27,7 +27,7 @@
             </div>
             <p class="mb-0 mt-2 font-italic">"
               {{row.overview}}
-             ."
+              ."
             </p>
             {% for genre in genres %}
             <span>Genre: {{genre}}</span>
@@ -35,17 +35,22 @@
             <p>Type:{{row.keywords}}</p>
             <p>Director:{{row.director}}</p>
             <p>Ratings:{{row.vote_average}}</p>
-            
+
             <footer class="blockquote-footer pt-4 mt-4 border-top">
-              Someone famous in
+              <form action="{% url 'movie-form' %}" method="post">
+
+                <input type="number" name="movie" id="" value={{row.id}}>
+                {% csrf_token %}
+                <input type="submit" value="add to watchlist">
+              </form>
               <cite title="Source Title">Source Title</cite>
             </footer>
           </blockquote>
         </div>
       </div>
-      
-       
-             
+
+
+
 
     </div>
     {% endfor %}
@@ -58,43 +63,31 @@
 
 {% block recommendation %}
 
-    <h2 style="text-align: center;">Recommendation for similar movies are</h2>
-    <div class="container-fluid">
-    
-        <!-- Movie list -->
-        <div class="row">
-          
-            {% for movie,image_url,movie_overview in movie_zipped %}
-            <div class="col-md-3">
-            <div class="card" style="width: 18rem;">
-                
-                <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{image_url}}" alt="Card image cap">
-                <div class="card-body">
-                    <h3 class="card-title">{{movie}}</h3>
-                  
-                  <p class="card-text">{{movie_overview}}</p>
-              
-                 
-                </div>
-              </div>
-            </div>
-              {% endfor %}
-            </div>
-        
+<h2 style="text-align: center;">Recommendation for similar movies are</h2>
+<div class="container-fluid">
+
+  <!-- Movie list -->
+  <div class="row">
+
+    {% for movie,image_url,movie_overview in movie_zipped %}
+    <div class="col-md-3">
+      <div class="card" style="width: 18rem;">
+
+        <img class="card-img-top img-fluid" src="https://image.tmdb.org/t/p/w500{{image_url}}" alt="Card image cap">
+        <div class="card-body">
+          <h3 class="card-title">{{movie}}</h3>
+
+          <p class="card-text" style="overflow:hidden;">{{movie_overview}}</p>
+
+
+        </div>
+      </div>
     </div>
+    {% endfor %}
+  </div>
+
+</div>
 
 
 
 {% endblock recommendation %}
-
-
-
-
-
-
-
-
-
-
-
-

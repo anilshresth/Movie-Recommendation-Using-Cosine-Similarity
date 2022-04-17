@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="container row mb-5">
+        <div class="col-4 fw-bold">
+            Movies
+        </div>
+        <div class="col-4 fw-bold">
+            Movie title
+        </div>
+        <div class="col-4 fw-bold"> <strong> Watch Now ? </strong> </div>
+
+    </div>
+    {% for movie_image, movie_title, movie_homepage in movie_zipped %}
+    <div class="container row mb-5">
+
+        <div class="col-4">
+
+            <img class="img-fluid" src="https://image.tmdb.org/t/p/w500{{movie_image}}" height="250px" width="250px"
+                alt="Card image cap">
+
+        </div>
+        <div class="col-4 mb-4">
+            {{movie_title}}
+
+        </div>
+        <div class="col-4 mb-4">
+            <a href="{{movie_homepage}}"><strong>Watch Now</strong></a>
+
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

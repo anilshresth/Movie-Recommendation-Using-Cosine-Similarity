@@ -37,5 +37,6 @@ def get_image_url_path(base_url):
 
 
 check_new_url = get_image_url_path(base_url=base_url)
+print(check_new_url)
 print(check_new_url['poster_path'])
 print(check_new_url['title'])

@@ -33,7 +33,7 @@ def recommendations(movie_title):
     # feature extraction using sklearn
     cv = CountVectorizer()
     count_matrix = cv.fit_transform(df["combined_features"])
-    print("Count Matrix:", count_matrix.toarray())
+    # print("Count Matrix:", count_matrix.toarray())
 
     cosine_sim = cosine_similarity(count_matrix)
 
@@ -62,12 +62,16 @@ def recommendations(movie_title):
         return data['poster_path'], data['overview']
 
     for counter, movie in enumerate(sorted_similar_movies):
-        if counter < 5:
-            movie_lists.append(get_title_from_index(movie[0]))
-            movie_id = get_movie_indexid(movie[0])
-            poster_path, overview = get_poster_path(movie_id)
-            poster_lists.append(poster_path)
-            movie_overviews.append(overview)
+
+        if counter < 9:
+            if counter == 0:
+                pass
+            else:
+                movie_lists.append(get_title_from_index(movie[0]))
+                movie_id = get_movie_indexid(movie[0])
+                poster_path, overview = get_poster_path(movie_id)
+                poster_lists.append(poster_path)
+                movie_overviews.append(overview)
 
         else:
             break

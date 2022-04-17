@@ -9,6 +9,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 from .recommedations import recommendations
+from users.models import Movie
 
 # Create your views here.
 work_path = os.path.dirname(os.path.abspath(__file__))
@@ -33,7 +34,7 @@ def homepage(request):
         get_image_url_path)
 
     for index, row in df.iterrows():
-        if index <= 20:
+        if index < 20:
             csv_rows.append(row)
 
         else:
@@ -52,6 +53,7 @@ def movie_detail(request, id):
     df = pd.read_csv(os.path.join(
         work_path, 'movie_dataset.csv'),  low_memory=False)
     movie_detail = df[df['id'] == id]
+    print(movie_detail)
 
     genres = list(movie_detail['genres'])
 
@@ -83,3 +85,36 @@ def movie_detail(request, id):
         return render(request, 'core/movie_detail.html', context=context)
 
     return HttpResponse("details to the movie not found")
+
+
+def moviewatchlist(request):
+    movie_watch_list = Movie.objects.filter(user=request.user)
+    image_urls = list()
+    movie_titles = list()
+    movies_homepages = list()
+
+    def get_image_url_path(id):
+        base_url = f"https://api.themoviedb.org/3/movie/{id}?api_key=3a52b2ae849a177b7117edd478a2e3e9&language=en-US"
+        response = requests.get(base_url)
+        time.sleep(0.5)
+        data = response.json()
+        return data['poster_path'], data['title'], data['homepage']
+
+    for movie in movie_watch_list:
+        print(movie.id)
+        image_url, movie_title, movie_homepage = get_image_url_path(
+            movie.movie_id)
+        image_urls.append(image_url)
+        movie_titles.append(movie_title)
+        movies_homepages.append(movie_homepage)
+
+    movie_zipped = zip(image_urls, movie_titles, movies_homepages)
+    # print(image_urls)
+    context = {
+        'movie_zipped': movie_zipped
+    }
+
+    if movie_watch_list:
+        return render(request, 'core/personal_movie_list.html', context=context)
+    else:
+        return HttpResponse('no object found for the user')

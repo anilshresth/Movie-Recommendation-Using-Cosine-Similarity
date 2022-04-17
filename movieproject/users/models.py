@@ -11,3 +11,11 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f'profile of user{self.user.username}'
+
+
+class Movie(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie_id = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.user.username} likes {self.movie_id}"

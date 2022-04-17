@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-
-from .forms import LoginForm, UserRegistrationForm
-from users.models import UserProfile
+from .forms import LoginForm, UserRegistrationForm, MovieForm
+from users.models import Movie, UserProfile
+from django.contrib import messages
+from core.views import movie_detail
 
 # Create your views here.
 
@@ -49,3 +50,25 @@ def register(request):
     return render(request,
                   'account/register.html',
                   {'user_form': user_form})
+
+
+def addmovieform(request):
+    method = request.method
+    form = request.POST
+    print(form)
+    movieadded = "movie has been succesfully added to the watchlist"
+    if method == "POST":
+
+        # process the forms
+        movieform = Movie()
+        movieform.user = request.user
+        movieform.movie_id = request.POST.get("movie")
+        movieform.save()
+
+        messages.success(
+            request, "movie has been succesfully added to the watchlist")
+
+        return redirect('/')
+    else:
+        form = MovieForm()
+        return render(request, 'core/movie_detail.html', {"form": form})
