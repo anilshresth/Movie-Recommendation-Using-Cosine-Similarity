@@ -39,9 +39,9 @@
             <footer class="blockquote-footer pt-4 mt-4 border-top">
               <form action="{% url 'movie-form' %}" method="post">
 
-                <input type="number" name="movie" id="" value={{row.id}}>
+                <input type="number" name="movie" id="" value={{row.id}} hidden>
                 {% csrf_token %}
-                <input type="submit" value="add to watchlist">
+                <input type="submit" class="btn btn-lg btn-danger p-4" value="ADD">
               </form>
               <cite title="Source Title">Source Title</cite>
             </footer>

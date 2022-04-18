@@ -40,8 +40,30 @@ def homepage(request):
         else:
             break
 
+    top_upcoming_urls = "https://api.themoviedb.org/3/movie/upcoming/?api_key=3a52b2ae849a177b7117edd478a2e3e9&language=en-US"
+
+    top_movies_titles = []
+    top_movies_poster = []
+
+    def get_top_movies(top_rated_urls):
+        response = requests.get(top_rated_urls)
+        data = response.json()
+        return data['results']
+
+    top_upcoming_movies = get_top_movies(top_upcoming_urls)
+    count = 0
+    for resul in top_upcoming_movies:
+        if count < 4:
+            top_movies_titles.append(resul['title'])
+            top_movies_poster.append(resul['poster_path'])
+            count += 1
+
+    top_movie_zipped = zip(
+        top_movies_titles, top_movies_poster)
+
     context = {
-        'data': csv_rows
+        'data': csv_rows,
+        'top_movie_zipped': top_movie_zipped
     }
     return render(request, template_name="core/movie_list.html", context=context)
 
@@ -118,3 +140,34 @@ def moviewatchlist(request):
         return render(request, 'core/personal_movie_list.html', context=context)
     else:
         return HttpResponse('no object found for the user')
+
+
+def get_topmovie_list(request):
+
+    top_rated_urls = "https://api.themoviedb.org/3/movie/top_rated/?api_key=3a52b2ae849a177b7117edd478a2e3e9&language=en-US"
+
+    top_movies_titles = []
+    top_movies_poster = []
+    top_movies_rating = []
+    top_movie_id = []
+
+    def get_top_movies(top_rated_urls):
+        response = requests.get(top_rated_urls)
+        data = response.json()
+        return data['results']
+
+    top_rated_movies = get_top_movies(top_rated_urls)
+
+    for resul in top_rated_movies:
+        top_movies_titles.append(resul['title'])
+        top_movies_poster.append(resul['poster_path'])
+        top_movies_rating.append(resul['vote_average'])
+        top_movie_id.append(resul['id'])
+
+    top_movie_zipped = zip(
+        top_movies_titles, top_movies_poster, top_movies_rating, top_movie_id)
+    context = {
+        'top_movie_zipped': top_movie_zipped
+    }
+
+    return render(request, 'core/top_movies_list.html', context=context)

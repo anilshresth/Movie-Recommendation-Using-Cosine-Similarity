@@ -33,9 +33,10 @@ def recommendations(movie_title):
     # feature extraction using sklearn
     cv = CountVectorizer()
     count_matrix = cv.fit_transform(df["combined_features"])
-    # print("Count Matrix:", count_matrix.toarray())
+    print("Count Matrix:", count_matrix.toarray())
 
     cosine_sim = cosine_similarity(count_matrix)
+    print(cosine_sim)
 
     movie_user_likes = movie_title
 

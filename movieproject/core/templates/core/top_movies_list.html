@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+
+{% block topmovies %}
+
+<h4>top IMDB movies by top rating</h4>
+<div class="row">
+    {% for movie_title,movie_poster,movie_rating,movie_id in top_movie_zipped %}
+    <div class="col-md-3  ">
+        <div class=" card border border-primary" style="width: 18rem;">
+            <img class="card-img-top rounded img-fluid" src="https://image.tmdb.org/t/p/w500{{movie_poster}}"
+                alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{movie_title}}</h5>
+                <h5 class="card-title">{{movie_rating}}</h5>
+
+                <a href="{% url 'movie_detail' movie_id  %}"> <span class=" border  watch_text ">
+                        add to favourites
+                    </span> </a>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock topmovies %}

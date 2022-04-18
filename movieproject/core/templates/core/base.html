@@ -45,7 +45,7 @@
             <a class="nav-link" href="#">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'moviewatchlist' %}">MyMovies</a>
+            <a class="nav-link" href="{% url 'moviewatchlist' %}">My Favourites</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'register' %}">Register </a>
@@ -59,13 +59,16 @@
             <a class="nav-link" href="{% url 'login' %}">Login</a>
           </li>
           {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'top_movies' %}">TOP IMDB</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
               MovieCategory
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="{% url 'top_movies' %}">TopIMDB</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li>
                 <hr class="dropdown-divider">
@@ -77,12 +80,27 @@
         </ul>
 
       </div>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search Movie" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
     </div>
   </nav>
   <!-- navigation ends -->
 
+  {% block upcoming %}
+
+  {% endblock upcoming %}
+
+
+
+  {% block topmovies %}
+
+
+  {% endblock topmovies %}
 
   {% block content %}
+
   {% endblock content %}
 
 
